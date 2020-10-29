@@ -188,7 +188,7 @@ function Map(props) {
 
             if (statusPermissions !== "granted") {
                 toastRef.current.show(
-                    "Tienes que aceptar los permisos de localizacion para crear un restaurante",
+                    "Tienes que aceptar los permisos de localizacion para crear un restaurante.",
                     3000
                 );
             } else {
