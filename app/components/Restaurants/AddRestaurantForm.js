@@ -28,7 +28,7 @@ export default function AddRestaurantForm(props) {
 
     const addRestaurant = () => {
         if (!restaurantName || !restaurantAddress || !restaurantDescription) {
-            toastRef.current.show("Todos los campos son obligatorios");
+            toastRef.current.show("Campos obligatorios");
         } else if (size(imagesSelected) === 0) {
             toastRef.current.show("El restaurante tiene que tener al menos una foto");
         } else if (!locationRestaurant) {
