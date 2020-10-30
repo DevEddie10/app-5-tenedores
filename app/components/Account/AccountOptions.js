@@ -19,7 +19,6 @@ export default function AccountOptions(props) {
                     <ChangeDisplayNameForm
                         displayName={userInfo.displayName}
                         setShowModal={setShowModal}
-                        toastRef={toastRef}
                         setReloadUserInfo={setReloadUserInfo}
                     />
                 )
