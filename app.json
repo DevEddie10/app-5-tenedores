@@ -20,6 +20,12 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.developereddie.cincotenedores",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBgasrondj80VfJ2QPOUA0zjXiDtWF02js"
+        }
+      },
       "permissions": [
         "CAMERA_ROLL",
         "READ_EXTERNAL_STORAGE",
