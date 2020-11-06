@@ -7,7 +7,7 @@ import Toast from "react-native-easy-toast";
 import Loading from "../../components/Loading";
 import Carousel from "../../components/Carousel";
 import Map from "../../components/Map";
-//import ListReviews from "../../components/Restaurants/ListReviews";
+import ListReviews from "../../components/Restaurants/ListReviews";
 
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
@@ -52,14 +52,14 @@ export default function Restaurant(props) {
     useEffect(() => {
         if (userLogged && restaurant) {
             db.collection("favorites")
-            .where("idRestaurant", "==", restaurant.id)
-            .where("idUser", "==", firebase.auth().currentUser.uid)
-            .get()
-            .then((response) => {
-                if (response.docs.length === 1) {
-                    setIsFavorite(true);
-                }
-            });
+                .where("idRestaurant", "==", restaurant.id)
+                .where("idUser", "==", firebase.auth().currentUser.uid)
+                .get()
+                .then((response) => {
+                    if (response.docs.length === 1) {
+                        setIsFavorite(true);
+                    }
+                });
         }
     }, [userLogged, restaurant]);
 
@@ -75,39 +75,39 @@ export default function Restaurant(props) {
             }
 
             db.collection("favorites")
-            .add(payload)
-            .then(() => {
-                setIsFavorite(true);
-                toastRef.current.show("Restaurante añadido a favoritos");
-            })
-            .catch(() => {
-                toastRef.current.show("Error al añadir el restaurnate a favoritos");
-            });
+                .add(payload)
+                .then(() => {
+                    setIsFavorite(true);
+                    toastRef.current.show("Restaurante añadido a favoritos");
+                })
+                .catch(() => {
+                    toastRef.current.show("Error al añadir el restaurnate a favoritos");
+                });
         }
     };
 
     const removeFavorite = () => {
         db.collection("favorites")
-        .where("idRestaurant", "==", restaurant.id)
-        .where("idUser", "==", firebase.auth().currentUser.uid)
-        .get()
-        .then((response) => {
-            response.forEach((doc) => {
-                const idFavorite = doc.id;
-                db.collection("favorites")
-                .doc(idFavorite)
-                .delete()
-                .then(() => {
-                    setIsFavorite(false);
-                    toastRef.current.show("Restaurante eliminado de favoritos");
-                })
-                .catch(() => {
-                    toastRef.current.show(
-                        "Error al eliminar el restaurante de favoritos"
-                    );
+            .where("idRestaurant", "==", restaurant.id)
+            .where("idUser", "==", firebase.auth().currentUser.uid)
+            .get()
+            .then((response) => {
+                response.forEach((doc) => {
+                    const idFavorite = doc.id;
+                    db.collection("favorites")
+                        .doc(idFavorite)
+                        .delete()
+                        .then(() => {
+                            setIsFavorite(false);
+                            toastRef.current.show("Restaurante eliminado de favoritos");
+                        })
+                        .catch(() => {
+                            toastRef.current.show(
+                                "Error al eliminar el restaurante de favoritos"
+                            );
+                        });
                 });
             });
-        });
     }
 
     if (!restaurant) return <Loading isVisible={true} text="Cargando..." />;
@@ -140,7 +140,10 @@ export default function Restaurant(props) {
                 name={restaurant.name}
                 address={restaurant.address}
             />
-            {/*<ListReviews navigation={navigation} idRestaurant={restaurant.id} />*/}
+            <ListReviews 
+                navigation={navigation} 
+                idRestaurant={restaurant.id} 
+            />
             <Toast ref={toastRef} position="center" opacity={0.9} />
         </ScrollView>
     );
@@ -194,7 +197,7 @@ function RestaurantInfo(props) {
             <Text style={styles.restaurantInfoTitle}>
                 Información sobre el restaurante
             </Text>
-            
+
             <Map location={location} name={name} height={100} />
             {map(listInfo, (item, index) => (
                 <ListItem
